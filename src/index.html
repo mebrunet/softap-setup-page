@@ -14,7 +14,7 @@ IMPORTANT Notes:
 <head>
   <title>Setup your device</title>
   
-  <style src='style.css'></style>
+  <link rel='stylesheet' type='text/css' href='style.css'>
 
 </head>
 
@@ -33,13 +33,18 @@ IMPORTANT Notes:
     </div>
     
     <div id='connect-div' style='display: none'>
-      <input type='password' id='password' placeholder='WiFi Password'></input>
+      <input type='password' id='password' placeholder='WiFi Password'/>
       <button id='connect-button'>Connect</button>
     </div>
 
-</body>
+  <script src='rsa-utils/jsbn_1.js'></script>
+  <script src='rsa-utils/jsbn_2.js'></script>
+  <script src='rsa-utils/prng4.js'></script>
+  <script src='rsa-utils/rng.js'></script>
+  <script src='rsa-utils/rsa.js'></script>
+  <script src='script.js'></script>
 
-<script src='script.js'></script>
+</body>
 
 
 </html>

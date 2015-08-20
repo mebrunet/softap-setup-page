@@ -8,10 +8,10 @@ function parseBigInt(str,r) {
 }
 
 function linebrk(s,n) {
-  var ret = "";
+  var ret = '';
   var i = 0;
   while(i + n < s.length) {
-    ret += s.substring(i,i+n) + "\n";
+    ret += s.substring(i,i+n) + '\n';
     i += n;
   }
   return ret + s.substring(i,s.length);
@@ -19,7 +19,7 @@ function linebrk(s,n) {
 
 function byte2Hex(b) {
   if(b < 0x10)
-    return "0" + b.toString(16);
+    return '0' + b.toString(16);
   else
     return b.toString(16);
 }
@@ -27,7 +27,7 @@ function byte2Hex(b) {
 // PKCS#1 (type 2, random) pad input string s to n bytes, and return a bigint
 function pkcs1pad2(s,n) {
   if(n < s.length + 11) { // TODO: fix for utf-8
-    alert("Message too long for RSA");
+    alert('Message too long for RSA');
     return null;
   }
   var ba = new Array();
@@ -60,7 +60,7 @@ function pkcs1pad2(s,n) {
   return new BigInteger(ba);
 }
 
-// "empty" RSA key constructor
+// 'empty' RSA key constructor
 function RSAKey() {
   this.n = null;
   this.e = 0;
@@ -79,25 +79,25 @@ function RSASetPublic(N,E) {
     this.e = parseInt(E,16);
   }
   else
-    alert("Invalid RSA public key");
+    alert('Invalid RSA public key');
 }
 
-// Perform raw public operation on "x": return x^e (mod n)
+// Perform raw public operation on 'x': return x^e (mod n)
 function RSADoPublic(x) {
   return x.modPowInt(this.e, this.n);
 }
 
-// Return the PKCS#1 RSA encryption of "text" as an even-length hex string
+// Return the PKCS#1 RSA encryption of 'text' as an even-length hex string
 function RSAEncrypt(text) {
   var m = pkcs1pad2(text,(this.n.bitLength()+7)>>3);
   if(m == null) return null;
   var c = this.doPublic(m);
   if(c == null) return null;
   var h = c.toString(16);
-  if((h.length & 1) == 0) return h; else return "0" + h;
+  if((h.length & 1) == 0) return h; else return '0' + h;
 }
 
-// Return the PKCS#1 RSA encryption of "text" as a Base64-encoded string
+// Return the PKCS#1 RSA encryption of 'text' as a Base64-encoded string
 //function RSAEncryptB64(text) {
 //  var h = this.encrypt(text);
 //  if(h) return hex2b64(h); else return null;
