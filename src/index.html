@@ -12,31 +12,31 @@ IMPORTANT Notes:
 <html>
 
 <head>
-  <META http-equiv='Content-Type' content='text/html; charset=us-ascii'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
   <title>Setup your device</title>
-  
   <link rel='stylesheet' type='text/css' href='style.css'>
-
 </head>
 
 <body>
-  
   <h1>Let's connect your device to the WiFi</h1>
   
-  <p><b>Your device ID is: </b><span id='device-id'>...gathering device information...</span></p>
+  <h3>Device ID:</h3>
+  <input id='device-id' size='25' value='' disabled/>
+  <button id='copy-button'>Copy</button>
   
   <div id='scan-div'>
-    <p>Scan for visible WiFi networks</p>
+    <h3>Scan for visible WiFi networks</h3>
     <button id='scan-button' type='button'>Scan</button>
   </div>
 
-    <div id='networks-div'>
-    </div>
-    
-    <div id='connect-div' style='display: none'>
-      <input type='password' id='password' placeholder='WiFi Password'/>
-      <button id='connect-button'>Connect</button>
-    </div>
+  <div id='networks-div'>
+  </div>
+  
+  <div id='connect-div' style='display: none'>
+    <input type='password' id='password' placeholder='password'/>
+    <br/>
+    <button id='connect-button'>Connect</button>
+  </div>
 
   <script src='rsa-utils/jsbn_1.js'></script>
   <script src='rsa-utils/jsbn_2.js'></script>

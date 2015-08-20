@@ -71,7 +71,9 @@ if __name__ == "__main__":
         
     with open(os.path.join(output_dir, output_file), open_type) as o:
       o.write("\nconst char " + variable + "[] = ")
-      o.write('"'+text.replace("\\n", "\\\\n")+'";\n') #Need to "double" escape newlines
+      text = text.replace("\\n", "\\\\n") # Need to "double escape" escaped 
+      text = text.replace("\\'", "\\\\'") # newlines and single quotes.
+      o.write('"'+ text +'";\n') 
   
     with open(os.path.join(output_dir, "intructions.txt"), open_type) as o:
       if open_type =="w":
