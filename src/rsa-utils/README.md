@@ -2,11 +2,11 @@
 
 ## What is this?
 
-This is a minified version of a selection of Tom Wu's rsa JS libraries. It contains the bare minimum to encrypt a message with a public key via RSA in browser. Minification was done using [slimit](https://pypi.python.org/pypi/slimit).
+This is a compilation of Tom Wu's rsa JS libraries. It contains the bare minimum to encrypt a message with a public key via RSA in browser.
 
 For more information visit Tom Wu's [rsa page](http://www-cs-students.stanford.edu/~tjw/jsbn/).
 
-Specifically, the files combined and minified are:
+Specifically, the files used are:
 
 - jsbn.js
 - rng.js
