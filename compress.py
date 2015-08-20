@@ -57,6 +57,7 @@ if __name__ == "__main__":
       
       if (extension == "js"):
         text = js_minify(text, mangle=True, mangle_toplevel=False)
+        text += "\n"
       
       elif (extension == "css"):
         text = css_minify(text)
