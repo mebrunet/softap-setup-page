@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<!--
+
+IMPORTANT Notes:
+1- File must NOT contain any double quotes (")
+2- Do not add any additional <style> or <script> tags
+3- Do to minification process, you must attach events to DOM elements in javascript and not in the HTML. i.e. do not use <Button onclick=myfunc>
+
+-->
+
+<html>
+
+<head>
+  <title>Setup your device</title>
+  
+  <style src='style.css'></style>
+
+</head>
+
+<body>
+  
+  <h1>Let's connect your device to the WiFi</h1>
+  
+  <p><b>Your device ID is: </b><span id='device-id'>...gathering device information...</span></p>
+  
+  <div id='scan-div'>
+    <p>Scan for visible WiFi networks</p>
+    <button id='scan-button' type='button'>Scan</button>
+  </div>
+
+    <div id='networks-div'>
+    </div>
+    
+    <div id='connect-div' style='display: none'>
+      <input type='password' id='password' placeholder='WiFi Password'></input>
+      <button id='connect-button'>Connect</button>
+    </div>
+
+</body>
+
+<script src='script.js'></script>
+
+
+</html>
