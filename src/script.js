@@ -98,7 +98,8 @@ var connect_callback = {
   success: function(resp){
     console.log('Credential accepted');
     //Now connect to the WiFi
-    postRequest(base_url+'connect-ap', {idx:0}, device_id_callback);
+    //postRequest(base_url+'connect-ap', {idx:0});
+    getRequest(base_url+'connect'); // strangely this works more consistently...
     document.getElementById('connect-button').innerHTML = 'Connecting to cloud...';
     window.alert('Your device will now attempt to connect to the cloud.')
   },
@@ -145,7 +146,7 @@ var connect = function(){
 
   }
 
-  postRequest(base_url+'configure-id', jsonData, connect_callback);
+  postRequest(base_url+'configure-ap', jsonData, connect_callback);
 }
 
 
@@ -159,10 +160,14 @@ var getRequest = function(url, callback){
     if (xmlhttp.readyState==4){
       if(xmlhttp.status==200){
         //Response okay
-        callback.success(JSON.parse(xmlhttp.responseText));
+        if(callback.success){
+          callback.success(JSON.parse(xmlhttp.responseText));
+        }
       } else {
         //Error
-        callback.error(xmlhttp.status, xmlhttp.responseText);
+        if(callback.error){  
+          callback.error(xmlhttp.status, xmlhttp.responseText);
+        }
       }
       if (callback.regardless){
         //executed regardless
@@ -186,23 +191,28 @@ var postRequest = function(url, jsonData, callback){
     if (xmlhttp.readyState==4){
       if(xmlhttp.status==200){
         //Response okay
-        callback.success(JSON.parse(xmlhttp.responseText));
+        if(callback.success){
+          callback.success(JSON.parse(xmlhttp.responseText));
+        }
       } else {
         //Error
-        callback.error(xmlhttp.status, xmlhttp.responseText);
+        if(callback.error){
+          callback.error(xmlhttp.status, xmlhttp.responseText);
+        }
       }
+      //executed regardless
       if (callback.regardless){
-        //executed regardless
         callback.regardless();
       }
     }
   }
 };
 
+// Executed immediately on load
+
 // Attach scan and connect
 var scanButton = document.getElementById('scan-button');
 var connectButton = document.getElementById('connect-button');
-
 if (scanButton.addEventListener) {                    // For all major browsers, except IE 8 and earlier
     scanButton.addEventListener('click', scan);
     connectButton.addEventListener('click', connect);
@@ -211,6 +221,6 @@ if (scanButton.addEventListener) {                    // For all major browsers,
     connectButton.attachEvent('onclick', connect);
 }
 
-// Executed immediately on load
+// Get important device information
 getRequest(base_url+'device-id', device_id_callback);
 getRequest(base_url+'public-key', public_key_callback);

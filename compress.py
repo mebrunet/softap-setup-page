@@ -29,7 +29,8 @@ from slimit import minify as js_minify
 from csscompressor import compress as css_minify
  
 def compress_html(text):
-  
+  # strip
+  text = text.strip()
   # Remove comments
   text = re.sub(re.compile("<!--(.*?)-->", re.DOTALL), "", text) #DOTALL includes newlines
   # Then whitespace
@@ -57,8 +58,7 @@ if __name__ == "__main__":
       
       if (extension == "js"):
         text = js_minify(text, mangle=True, mangle_toplevel=False)
-        text += "\n"
-      
+
       elif (extension == "css"):
         text = css_minify(text)
       
@@ -71,14 +71,16 @@ if __name__ == "__main__":
         
     with open(os.path.join(output_dir, output_file), open_type) as o:
       o.write("\nconst char " + variable + "[] = ")
-      o.write('"'+text.replace("\n", "\\n")+'";\n')
+      o.write('"'+text.replace("\\n", "\\\\n")+'";\n') #Need to "double" escape newlines
   
     with open(os.path.join(output_dir, "intructions.txt"), open_type) as o:
       if open_type =="w":
         # First loop
-        o.write("Add {0} to hal/src/photon/ \n\nIn softap.cpp, modify line 923 to read ... page[{1}];\n\nIn softap_ip.c, add '#include \"{0}\" and add the below lines to the list of pages.\n\n".format(output_file, 9+len(files)))
+        msg="Add the generated {0} to hal/src/photon/ \n\nIn hal/src/photon/softap.cpp: \n- modify line 923 to read: wiced_http_page_t page[{1}];\n\nIn hal/src/photon/softap_ip.c: \n- add '#include \"{0}\"\n- change the ROOT_HTTP_PAGE_REDIRECT to the page of your choice\n- add the below lines to the list of pages:\n\n"
         
-      template = '{{ "/{0}", "text/html", WICED_STATIC_URL_CONTENT, .url_content.static_data = {{{1}, sizeof({1}) }}}},\n'
+        o.write(msg.format(output_file, 9+len(files)))
+        
+      template = '{{ "/{0}", "text/html", WICED_STATIC_URL_CONTENT, .url_content.static_data = {{{1}, sizeof({1}) - 1 }}}},\n'
       o.write(template.format(filename, variable))
     
     open_type = "a" # Append future
