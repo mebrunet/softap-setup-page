@@ -2,29 +2,141 @@
 html {
   height: 100%;
   margin: auto;
+  background-color: white;
 }
 
 body {
-    margin-top: 15%;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 350px;
-    text-align: center;
-    padding: 20px;
-    padding-bottom: 50px;
-    border: 2px solid black;
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 20px;
+  background-color: rgb(26,171,224);
+	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+	font-weight: normal;
+	color: white;
+	margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+  max-width: 400px;
+  text-align: center;
+  border: 1px solid rgb(110,110,112);
+  border-radius: 4px;
 }
 
-#scan-button{
+div {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+h1 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+button {
+  border-color: rgb(28,117,190);
+  background-color: rgb(28,117,190);
+  color: white;
+  border-radius: 5px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+button.input-helper {
+  background-color: rgb(190,190,190);
+  border-color: rgb(190,190,190);
+  color: rgb(110,110,112);
+  margin-left: 3px;
+}
+
+button:disabled{
+  background-color: rgb(190,190,190);
+  border-color: rgb(190,190,190);
+  color: white;
+}
+
+input[type='text'], input[type='password']{
+  background-color: white;
+  color: rgb(110,110,112);
+  border-color: white;
+  border-radius: 5px;
+  height: 25px;
+  text-align: center;
+  font-size: 15px;
+}
+
+input:disabled {
+  background-color: rgb(190,190,190);
+  border-color: rgb(190,190,190);
+}
+
+input[type='radio']{
+  display: inline-block;
+  margin:0;
+  border:0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  height: 1em;
+  width: 20%;
+}
+
+label {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: inline-block;
+  width: 80%;
+  text-align: left;
+}
+
+input[type='radio']:checked+label {
+  font-weight: bold;
+  color: rgb(28,117,190);
+}
+
+.scanning-error {
+  font-weight: bold;
+  text-align: center;
+}
+
+.radio-div {
+  box-sizing: border-box;
+  margin: 2px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  color: rgb(110,110,112);
+  border: 1px solid rgb(110,110,112);
+  border-radius: 3px;
+  width: 100%;
+  padding: 5px;
+}
+
+#networks-div {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+#device-id {
+  text-align: center;
+}
+
+#scan-button {
   min-width: 100px;
 }
 
-#connect-button{
+#connect-button {
+  display: block;
   min-width: 100px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
 }
 
 #password{
-  text-align: center;
   margin-top: 20px;
   margin-bottom: 10px;
 }
+

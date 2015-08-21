@@ -18,11 +18,11 @@ IMPORTANT Notes:
 </head>
 
 <body>
-  <h1>Let's connect your device to the WiFi</h1>
+  <h1>Connect me to your WiFi!</h1>
   
-  <h3>Device ID:</h3>
-  <input id='device-id' size='25' value='' disabled/>
-  <button id='copy-button'>Copy</button>
+  <h3>My device ID:</h3>
+  <input type=text id='device-id' size='20' value='' disabled/>
+  <button type='button' class='input-helper' id='copy-button'>Copy</button>
   
   <div id='scan-div'>
     <h3>Scan for visible WiFi networks</h3>
@@ -33,9 +33,12 @@ IMPORTANT Notes:
   </div>
   
   <div id='connect-div' style='display: none'>
-    <input type='password' id='password' placeholder='password'/>
-    <br/>
-    <button id='connect-button'>Connect</button>
+    <p>Don't see your network? Move me closer to your router, then re-scan.</p>
+    <form id='connect-form'>
+      <input type='password' id='password' size='20' placeholder='password'/>
+      <button type='button' class='input-helper' id='show-button'>Show</button>
+      <button type='submit' id='connect-button'>Connect</button>
+    </form>
   </div>
 
   <script src='rsa-utils/jsbn_1.js'></script>
