@@ -113,7 +113,7 @@ var configure = function(evt){
 
   };
   // send
-  connectButton.innerHTML = 'Sending...';
+  connectButton.innerHTML = 'Sending credentials...';
   disableButtons();
   console.log('Sending credentials: ' + JSON.stringify(jsonData));
   postRequest(base_url+'configure-ap', jsonData, configure_callback);
@@ -121,20 +121,34 @@ var configure = function(evt){
 
 var configure_callback = {
   success: function(resp){
-    console.log('Credential accepted');
+    console.log('Credentials received.');
     //Now connect to the WiFi
-    //postRequest(base_url+'connect-ap', {idx:0});
-    getRequest(base_url+'connect'); // strangely this works more consistently...
-    connectButton.innerHTML = 'Connecting to cloud...';
-    window.alert('Your device should now start flashing and attempt to connect to the cloud. This usually takes about 20 seconds, after which it will begin \'breathing\' (i.e. slowly blinking) cyan. \n\n\nIf nothing happens, and your device stays blue, push the reset button to trigger the connection process. \n\n\nIf this process fails because you entered the wrong password, the device will flash green indefinitely. In this case, hold the setup button for 6 seconds (until the device starts blinking blue again), reconnect to the access point (WiFi hotspot) it generates, and reload this page to try again.');
+    connectButton.innerHTML = 'Credentials received...';
+    postRequest(base_url+'connect-ap', {idx:0}, connect_callback);
   },
   error: function(error, resp){
-    console.log('Credential error: ' + error);
-    window.alert('The connection command failed, check that you are still well connected to the device\'s access point (WiFi hotspot) and retry.');
+    console.log('Configure error: ' + error);
+    window.alert('The configuration command failed, check that you are still well connected to the device\'s WiFi hotspot and retry.');
     connectButton.innerHTML = 'Retry';
     enableButtons();
   }
 };
+
+var connect_callback = {
+  success: function(resp){
+    console.log('Attempting to connect to the cloud.');
+    //Now connect to the WiFi
+    connectButton.innerHTML = 'Attempting to connect...';
+    window.alert('Your device should now start flashing green and attempt to connect to the cloud. This usually takes about 20 seconds, after which it will begin slowly blinking cyan. \n\n\nIf this process fails because you entered the wrong password, the device will flash green indefinitely. In this case, hold the setup button for 6 seconds until the device starts blinking blue again. Then reconnect to the WiFi hotspot it generates and reload this page to try again.');
+  },
+  error: function(error, resp){
+    console.log('Connect error: ' + error);
+    window.alert('The connect command failed, check that you are still well connected to the device\'s WiFi hotspot and retry.');
+    connectButton.innerHTML = 'Retry';
+    enableButtons();
+  }
+
+}
 
 // Helper methods --------------------------------------------------------------
 
@@ -225,8 +239,7 @@ var postRequest = function(url, jsonData, callback){
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open('POST', url, true); //true specifies async
   xmlhttp.timeout = 4000;
-  xmlhttp.setRequestHeader('Content-Type', 'text');
-  xmlhttp.setRequestHeader('Cache-Control', 'no-cache');
+  xmlhttp.setRequestHeader('Content-Type', 'multipart/form-data');
   //console.log('POST: ' + dataString);
   xmlhttp.send(dataString);
 
