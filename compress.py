@@ -51,10 +51,15 @@ if __name__ == "__main__":
   # compress by filetype
   for filename, variable in files.items():
     text = ""
+    extension = filename.split(".")[-1]
+    contentType = {
+      "js": "application/javascript",
+      "html": "text/html",
+      "css": "text/css"
+    }
 
     with open(os.path.join(source_dir, filename), "r") as f:
       text = f.read()
-      extension = filename.split(".")[-1]
       
       if (extension == "js"):
         text = js_minify(text, mangle=True, mangle_toplevel=False)
@@ -82,7 +87,7 @@ if __name__ == "__main__":
         
         o.write(msg.format(output_file, 9+len(files)))
         
-      template = '{{ "/{0}", "text/html", WICED_STATIC_URL_CONTENT, .url_content.static_data = {{{1}, sizeof({1}) - 1 }}}},\n'
-      o.write(template.format(filename, variable))
+      template = '{{ "/{0}", "{1}", WICED_STATIC_URL_CONTENT, .url_content.static_data = {{{2}, sizeof({2}) - 1 }}}},\n'
+      o.write(template.format(filename, contentType[extension], variable))
     
     open_type = "a" # Append future
