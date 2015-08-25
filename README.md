@@ -46,6 +46,12 @@ Flash your new version of the firmware:
 	cd modules
 	sudo make PLATFORM=photon clean all program-dfu
 
+Note: when flashing the `develop` branch to your device, you need to add PARTICLE_DEVELOP=1 to your environment variables available at runtime. On linux:
+
+	export PARTICLE_DEVELOP=1
+	sudo -E make PLATFORM=photon clean all program-dfu
+
+
 Enjoy connecting your Photon to the WiFi without an app!
 
 **Note:** This should be build against v0.4.4 or develop in order to work properly.
