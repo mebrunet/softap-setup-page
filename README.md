@@ -2,6 +2,8 @@
 
 ## Updates
 
+- 2015/08/24 - Everything is working when built against v0.4.4 and develop. The page can now be served from the Photon and/or an external host. i.e. CORS issues have been resolved. 
+
 - 2015/08/20 - Published first working prototype version! (yay) But it only seems to work with Photon firmware branch photon_043 right now... not sure why it won't work with develop.
 
 ## Description
@@ -29,6 +31,7 @@ You'll need:
 - The Photon firmware (branch photon_043) + associated build tools. (See [this repository](https://bitbucket.org/mebrunet/photon-firmware/) for help with that).
 - Patience... haha, as I learnt over the last week, serving the modern web from embedded devices is an exercise in tenacity.
 
+Start with:
 
 	git clone https://github.com/mebrunet/softap-setup-page
 	cd softap-setup-page
@@ -45,7 +48,7 @@ Flash your new version of the firmware:
 
 Enjoy connecting your Photon to the WiFi without an app!
 
-**Note:** One of the strange bugs I'm experiencing is that the Photon exhibits inconsistent behavior when sent the "connect" command. The device may SOS (flash red), reboot, and connect (not terrible), OR do nothing and require a manual reset to connect (annoying). Will keep you posted.
+**Note:** This should be build against v0.4.4 or develop in order to work properly.
 
 ## Changing Stuff
 
@@ -73,9 +76,9 @@ In both cases you now have access to both the Photon and the Internet.
 
 ### Postman and disabling CORS
 
-If you want to toy with the HTTP API from your browser, a great tool is [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en).
+If you want to toy with the HTTP API from your browser, a great tool is [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en). (Note I found POST requests required setting Content-Type headers to "multipart/form-data".)
 
-However, if you want to use jQuery, you'll need to disable [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), by using this [chrome extension](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en) for example.
+However, if you want to use jQuery, you'll need to disable [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), by using this [chrome extension](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en) for example. (2015/08/24 - This is no longer the case if building against v0.4.4 or develop).
 
 ## Useful links
 - [Particle's Soft AP over HTTP documentation](https://github.com/spark/firmware/blob/develop/hal/src/photon/soft-ap.md)
