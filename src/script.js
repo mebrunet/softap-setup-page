@@ -107,11 +107,12 @@ var configure = function(evt){
   var jsonData = {
     idx:0,
     ssid: network.ssid,
-    pwd: rsa.encrypt(password),
     sec: network.sec,
     ch: network.ch
-
-  };
+  }; 
+  if(network.sec != 0){
+	  jsonData.pwd = rsa.encrypt(password);
+  }
   // send
   connectButton.innerHTML = 'Sending credentials...';
   disableButtons();
