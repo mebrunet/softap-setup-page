@@ -33,6 +33,13 @@ h1 {
   margin-bottom: 25px;
 }
 
+ol {
+  text-align: left;
+}
+li {
+  padding: 10px;
+}
+
 button {
   border-color: rgb(28,117,190);
   background-color: rgb(28,117,190);

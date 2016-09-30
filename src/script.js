@@ -1,8 +1,3 @@
-/*
-
-IMPORTANT file must NOT contain any double quotes (').
-
-*/
 
 // Globals ---------------------------------------------------------------------
 
@@ -13,6 +8,7 @@ var rsa = new RSAKey(); // requires rsa-utils/
 
 // Common DOM elements
 var scanButton = document.getElementById('scan-button');
+var initialButton = document.getElementById('initial-button');
 var connectButton = document.getElementById('connect-button');
 var copyButton = document.getElementById('copy-button');
 var showButton = document.getElementById('show-button');
@@ -22,16 +18,25 @@ var connectForm = document.getElementById('connect-form');
 
 // Function ordered by typical user flow ---------------------------------------
 
+// Get important device information
+var getDeviceInfo = function() {
+  disableButtons();
+  getRequest(base_url+'public-key', public_key_callback);
+}
+
 var public_key_callback = {
   success: function(resp){
     console.log('Public key: ' + resp['b']);
     public_key = resp['b'];
     // Pull N and E out of device key and use to set public key
     rsa.setPublic(public_key.substring(58,58+256), public_key.substring(318,318+6));
+    getRequest(base_url+'device-id', device_id_callback);
   },
   error: function(error, resp){
     console.log(error);
-    window.alert('There was a problem fetching important information from your device. Please verify your connection, then reload this page.');
+    window.alert('There was a problem fetching important information from your device. Please verify your connection to the device and try again.');
+    enableButtons();
+    initialButton.innerHTML = "Retry";
   }
 };
 
@@ -39,12 +44,19 @@ var device_id_callback = {
   success: function(resp){
     var id = resp['id'];
     deviceID.value = id;
+    document.getElementById('initial-div').style.display = 'none';
+    document.getElementById('device-id-div').style.display = 'block';
+    document.getElementById('scan-div').style.display = 'block';
   },
   error: function(error, resp){
     console.log(error);
     var msg = 'COMMUNICATION_ERROR';
     deviceID.value = msg;
-    
+    window.alert('There was a problem fetching important information from your device. Please verify your connection to the device and try again.');
+  },
+  regardless: function() {
+    enableButtons();
+    initialButton.innerHTML = "Retry";
   }
 };
 
@@ -109,7 +121,7 @@ var configure = function(evt){
     ssid: network.ssid,
     sec: network.sec,
     ch: network.ch
-  }; 
+  };
   if(network.sec != 0){
 	  jsonData.pwd = rsa.encrypt(password);
   }
@@ -140,7 +152,7 @@ var connect_callback = {
     console.log('Attempting to connect to the cloud.');
     //Now connect to the WiFi
     connectButton.innerHTML = 'Attempting to connect...';
-    window.alert('Your device should now start flashing green and attempt to connect to the cloud. This usually takes about 20 seconds, after which it will begin slowly blinking cyan. \n\n\nIf this process fails because you entered the wrong password, the device will flash green indefinitely. In this case, hold the setup button for 6 seconds until the device starts blinking blue again. Then reconnect to the WiFi hotspot it generates and reload this page to try again.');
+    window.alert('Your device should now start flashing green and attempt to connect to the cloud, this usually takes less than 20 seconds. Once connected, your device will slowly blink light blue. \n\n\nIf this process fails because you entered the wrong password, the device will flash green indefinitely. If that happens, simply reload this page and try again.');
   },
   error: function(error, resp){
     console.log('Connect error: ' + error);
@@ -154,11 +166,13 @@ var connect_callback = {
 // Helper methods --------------------------------------------------------------
 
 var disableButtons = function (){
+  initialButton.disabled = true;
   connectButton.disabled = true;
   scanButton.disabled = true;
 };
 
 var enableButtons = function (){
+  initialButton.disabled = false;
   connectButton.disabled = false;
   scanButton.disabled = false;
 };
@@ -241,6 +255,7 @@ var postRequest = function(url, jsonData, callback){
   xmlhttp.open('POST', url, true); //true specifies async
   xmlhttp.timeout = 4000;
   xmlhttp.setRequestHeader('Content-Type', 'multipart/form-data');
+  xmlhttp.withCredentials = false;
   //console.log('POST: ' + dataString);
   xmlhttp.send(dataString);
 
@@ -272,17 +287,22 @@ var postRequest = function(url, jsonData, callback){
 
 // Attach events
 if (scanButton.addEventListener) {  // For all major browsers
+    initialButton.addEventListener('click', getDeviceInfo)
     copyButton.addEventListener('click', copy);
     showButton.addEventListener('click', toggleShow);
     scanButton.addEventListener('click', scan);
     connectForm.addEventListener('submit', configure);
 } else if (scanButton.attachEvent) { // For IE 8 and earlier
+    initialButton.attachEvent('onclick', getDeviceInfo);
     copyButton.attachEvent('onclick', copy);
     showButton.attachEvent('onclick', toggleShow);
     scanButton.attachEvent('onclick', scan);
     connectForm.attachEvent('onsubmit', configure);
 }
 
-// Get important device information
-getRequest(base_url+'device-id', device_id_callback);
-getRequest(base_url+'public-key', public_key_callback);
+// Set initial view depending on whether hosted externally or on device
+if (window.location.hostname === '192.168.0.1') {
+  document.getElementById('device-id-div').style.display = 'block';
+} else {
+  document.getElementById('initial-div').style.display = 'block';
+}
