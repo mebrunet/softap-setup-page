@@ -6,7 +6,7 @@
 
 ## Description
 
-This repository gives you the tools to *build* a SoftAP page for the Photon (i.e. a page served by the Photon capable of connecting it to the WiFi). It shares the build tools I put together, in hopes that others will improve what I've done. Which shouldn't be hard... they are very simple.
+This repository gives you the tools to *build* a SoftAP page for the Photon (i.e. setup up the wifi with only a browser, no app required). It shares the build tools I put together in hopes that others will improve what I've done. Which shouldn't be hard... they are very simple.
 
 The basic idea is to edit the style and wording of the html / js, then either: 
 
@@ -29,7 +29,7 @@ AND/OR
 ### Getting Started
 You'll need:
 
-- Python 2.7, pip, and virtualenv. 
+- Python 2.7, pip. 
 - A modern browser (I'm on chrome v53),
 - A Photon running firmaware 0.5.0 or above.
 - You should probably also read the [SoftAP section](https://docs.particle.io/reference/firmware/photon/#softap-http-pages) of Particle's firmware reference.
@@ -39,7 +39,6 @@ Then install everything on your machine with:
 	git clone https://github.com/mebrunet/softap-setup-page
 	cd softap-setup-page
 	pip install -r requirements.txt
-	source venv/bin/activate # Use 'deactivate' to undo this when you're done
 
 ### Serving SoftAP pages externally (eg. from an amazon S3 bucket)
 The idea here is to:
