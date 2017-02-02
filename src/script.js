@@ -30,11 +30,29 @@ var public_key_callback = {
     public_key = resp['b'];
     // Pull N and E out of device key and use to set public key
     rsa.setPublic(public_key.substring(58,58+256), public_key.substring(318,318+6));
-    getRequest(base_url+'device-id', device_id_callback);
+    if (claim_code) {
+      console.log('Setting claim code', claim_code);
+      postRequest(base_url+'set', { k: 'cc', v: claim_code }, claim_code_callback);
+    } else {
+      getRequest(base_url+'device-id', device_id_callback);
+    }
   },
   error: function(error, resp){
     console.log(error);
     window.alert('There was a problem fetching important information from your device. Please verify your connection to the device and try again.');
+    enableButtons();
+    initialButton.innerHTML = "Retry";
+  }
+};
+
+var claim_code_callback = {
+  success: function(resp){
+    console.log('Claim code set.', resp);
+    getRequest(base_url+'device-id', device_id_callback);
+  },
+  error: function(error, resp){
+    console.log(error);
+    window.alert('There was a problem writing important information to your device. Please verify your connection to the device and try again.');
     enableButtons();
     initialButton.innerHTML = "Retry";
   }
@@ -283,7 +301,21 @@ var postRequest = function(url, jsonData, callback){
   };
 };
 
+function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2]/* .replace(/\+/g, " ")*/); // "+" is important in CC
+}
+
 // Executed immediately on load -----------------------------------------------
+
+var claim_code = getParameterByName('claim_code'); // read the claim code from QS
 
 // Attach events
 if (scanButton.addEventListener) {  // For all major browsers

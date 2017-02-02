@@ -1,7 +1,7 @@
 # Tools to build a SoftAP Setup page for the Photon
 
 ## Updates
-
+- 2017/02/02 - I've added the ability to set the claim code. Simply navigate to the page with query parameter `claim_code`.
 - 2016/09/30 - I've found some time to bring this project up to date with the new method for implementing SoftAP on the Photon. See the [demo](http://mebrunet.github.io/softap-setup-page/src). More updates comming soon!
 
 ## Description
@@ -60,6 +60,13 @@ Use
 to minify and mangle your pages into something you can embed in the firmware.
 
 A more detailed explaination + examples coming soon!
+
+### Setting the Claim Code
+If you want to set the claim code on the device, simply navigate to the page with query parameter `claim_code` set. For example hitting 
+
+`http://domain_where_softap_pages_served?claim_code=abcd1234`
+
+Will set the claim code to `abcd1234` as you go through the setup process. 
 
 ## Notes
 - If you renamed or added files you'll need to change the configuration settings. For now this is done by editing `compress.py` directly. It's pretty self explanatory, but feel free to open an issue if you have questions.
