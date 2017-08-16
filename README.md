@@ -1,3 +1,15 @@
+
+# Operating in a Virtual Environment
+
+## Create a python2.7 virtual Environment
+
+    $ virtualenv --python=/usr/bin/python2.7 venv
+
+## Activate
+
+    $ source venv/bin/activate
+
+
 # Tools to build a SoftAP Setup page for the Photon
 
 ## Updates
@@ -8,7 +20,7 @@
 
 This repository gives you the tools to *build* a SoftAP page for the Photon (i.e. setup up the wifi with only a browser, no app required). It shares the build tools I put together in hopes that others will improve what I've done. Which shouldn't be hard... they are very simple.
 
-The basic idea is to edit the style and wording of the html / js, then either: 
+The basic idea is to edit the style and wording of the html / js, then either:
 
  - Serve the SoftAP pages from static file server you control.
 
@@ -20,7 +32,7 @@ AND/OR
 
 1) The browser friendly RSA tools you need to encrypt your WiFi password. (Thank you [Tom Wu](http://www-cs-students.stanford.edu/~tjw/jsbn/) !)
 2) A basic html and javascript file that takes the user through the connection process. (And has slightly different instructions when serving externally vs. from the Photon.)
-3) A simple python script to serve these files locally as you make changes. 
+3) A simple python script to serve these files locally as you make changes.
 4) A compression tool that takes your source code and turns it into a bunch of C++ character arrays for easy injection into the firmware.
 
 
@@ -29,7 +41,7 @@ AND/OR
 ### Getting Started
 You'll need:
 
-- Python 2.7, pip. 
+- Python 2.7, pip.
 - A modern browser (I'm on chrome v53),
 - A Photon running firmaware 0.5.0 or above.
 - You should probably also read the [SoftAP section](https://docs.particle.io/reference/firmware/photon/#softap-http-pages) of Particle's firmware reference.
@@ -62,11 +74,11 @@ to minify and mangle your pages into something you can embed in the firmware.
 A more detailed explaination + examples coming soon!
 
 ### Setting the Claim Code
-If you want to set the claim code on the device, simply navigate to the page with query parameter `claim_code` set. For example hitting 
+If you want to set the claim code on the device, simply navigate to the page with query parameter `claim_code` set. For example hitting
 
 `http://domain_where_softap_pages_served?claim_code=abcd1234`
 
-Will set the claim code to `abcd1234` as you go through the setup process. 
+Will set the claim code to `abcd1234` as you go through the setup process.
 
 ## Notes
 - If you renamed or added files you'll need to change the configuration settings. For now this is done by editing `compress.py` directly. It's pretty self explanatory, but feel free to open an issue if you have questions.

@@ -9,7 +9,7 @@ body {
   box-sizing: border-box;
   min-height: 100%;
   padding: 20px;
-  background-color: rgb(26,171,224);
+  background-color: #1997C6;/*rgb(26,171,224);*/
 	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 	font-weight: normal;
 	color: white;
@@ -146,4 +146,3 @@ input[type='radio']:checked+label {
   margin-top: 20px;
   margin-bottom: 10px;
 }
-
