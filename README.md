@@ -1,6 +1,10 @@
 # Tools to build a SoftAP Setup page for the Photon
 
+## Unmaintained
+*Notice* I have been out of IoT technical development for a couple years now, and I'm not in a place to address issues. If this code is still useful, and anyone wants to take over ownership, please reach out. 
+
 ## Updates
+- 2020/03/30 - I admit that I don't maintain this repository anymore...
 - 2017/02/02 - I've added the ability to set the claim code. Simply navigate to the page with query parameter `claim_code`.
 - 2016/09/30 - I've found some time to bring this project up to date with the new method for implementing SoftAP on the Photon. See the [demo](http://mebrunet.github.io/softap-setup-page/src). More updates comming soon!
 
